@@ -1,1 +1,1 @@
-# ratings-reviews-service
+# reviews-service
