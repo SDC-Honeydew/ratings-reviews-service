@@ -1,16 +1,83 @@
-require('dotenv').config()
-const { Client, Pool } = require('pg');
-const dbConnection = new Pool(); // works like this using dotenv and .env file w/ db env variable!
+// require('dotenv').config()
 
-dbConnection.connect((err) => {
-  if (err) {
-    console.log('Error connecting to DB');
-  } else {
-    console.log('connected to Postgres!');
-  }
+const { Sequelize, DataTypes } = require('sequelize');
+const sequelize = new Sequelize('atelier', 'mattwrobel', '', {
+  host: 'localhost',
+  dialect: 'postgres'
 });
 
-module.exports = dbConnection;
+const Review = sequelize.define('review', {
+  product_id: {
+    type: DataTypes.INTEGER
+  },
+  rating: {
+    type: DataTypes.INTEGER
+  },
+  date: {
+    type: DataTypes.BIGINT
+  },
+  summary: {
+    type: DataTypes.TEXT
+  },
+  body: {
+    type: DataTypes.TEXT
+  },
+  recommend: {
+    type: DataTypes.BOOLEAN
+  },
+  reported: {
+    type: DataTypes.BOOLEAN
+  },
+  reviewer_name: {
+    type: DataTypes.TEXT
+  },
+  reviewer_email: {
+    type: DataTypes.TEXT
+  },
+  response: {
+    type: DataTypes.TEXT
+  },
+  helpfulness: {
+    type: DataTypes.INTEGER
+  },
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true
+  }
+}, {timestamps: false});
+
+const syncReview = async () => {
+  await Review.sync();
+  console.log("The table for the Review model was just (re)created!");
+};
+
+syncReview();
+
+module.exports.Review = Review;
+
+// const testConnection = async () => {
+//   try {
+//     await sequelize.authenticate();
+//     console.log('Connection has been established successfully.');
+//   } catch (error) {
+//     console.error('Unable to connect to the database:', error);
+//   }
+// };
+
+// testConnection();
+
+// const { Client, Pool } = require('pg');
+// const dbConnection = new Pool(); // works like this using dotenv and .env file w/ db env variable!
+
+// dbConnection.connect((err) => {
+//   if (err) {
+//     console.log('Error connecting to DB');
+//   } else {
+//     console.log('connected to Postgres!');
+//   }
+// });
+
+// module.exports = dbConnection;
 
 // pool.end() DO I NEED THIS?
 
