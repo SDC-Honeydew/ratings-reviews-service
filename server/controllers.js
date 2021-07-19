@@ -1,7 +1,9 @@
 const models = require('./models.js');
 
 exports.get = (req, res) => {
-  return models.get()
+  console.log(req.query);
+
+  return models.get(req)
     .then((data) => {
       res.status(200).send(data);
     })

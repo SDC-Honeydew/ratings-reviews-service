@@ -1,10 +1,10 @@
 const db = require('./db.js');
 
 module.exports = {
-  get: () => {
+  get: (req) => {
 
       return new Promise ((resolve, reject) => {
-        db.query('SELECT * FROM reviews WHERE id BETWEEN 0 AND 10', (err, data) => {
+        db.query(`SELECT * FROM reviews WHERE product_id = ${req.query.product_id}`, (err, data) => {
           if (err) {
             reject(err);
           } else {

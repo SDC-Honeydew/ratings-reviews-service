@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const controllers = require('./controllers.js');
 
-router.get('/', controllers.get);
+router.get('/reviews/', controllers.get);
 
 module.exports = router;
