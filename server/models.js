@@ -7,13 +7,14 @@ module.exports = {
     return new Promise ((resolve, reject) => {
 
       db.Review.findAll({
+        attributes: ['id', 'rating', 'summary', 'recommend', 'response', 'body', 'date', 'reviewer_name', 'helpfulness'],
         where: {
           product_id: product_id
         },
         order: [['helpfulness', 'DESC']]
       })
-        .then((data) => {
-          resolve(data);
+        .then((reviews) => {
+          resolve(reviews);
         })
         .catch((err) => {
           reject(err);
@@ -41,13 +42,14 @@ module.exports = {
 
 };
 
-module.exports.getReviewPhotos(5)
-  .then((photos) => {
-    console.log(photos);
-  })
-  .catch((err) => {
-    console.log(err);
-  })
+// // TEST
+// module.exports.getReviewPhotos(5)
+//   .then((photos) => {
+//     console.log(photos);
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//   })
 
     //   return new Promise ((resolve, reject) => {
     //     db.query(`SELECT * FROM reviews WHERE product_id = ${req.query.product_id}`, (err, data) => {
