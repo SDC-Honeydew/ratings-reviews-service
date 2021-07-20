@@ -1,5 +1,4 @@
 // require('dotenv').config()
-
 const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = new Sequelize('atelier', 'mattwrobel', '', {
   host: 'localhost',
@@ -46,14 +45,31 @@ const Review = sequelize.define('review', {
   }
 }, {timestamps: false});
 
+const Reviews_photo = sequelize.define('reviews_photo', {
+  review_id: DataTypes.INTEGER,
+  url: DataTypes.TEXT,
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true
+  }
+}, {timestamps: false});
+
 const syncReview = async () => {
   await Review.sync();
   console.log("The table for the Review model was just (re)created!");
 };
 
+const syncReviews_photo = async () => {
+  await Reviews_photo.sync();
+  console.log("The table for the Reviews_photo model was just (re)created!");
+};
+
+
 syncReview();
+syncReviews_photo();
 
 module.exports.Review = Review;
+module.exports.Reviews_photo = Reviews_photo;
 
 // const testConnection = async () => {
 //   try {
