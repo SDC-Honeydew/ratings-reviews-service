@@ -12,7 +12,7 @@ module.exports = {
           product_id: product_id,
           reported: false
         },
-        // include: db.Reviews_photo,
+        include: db.Reviews_photo,
         order: [['helpfulness', 'DESC']]
       })
         .then((reviews) => {
@@ -24,6 +24,7 @@ module.exports = {
     })
   },
 
+};
   // getReviewPhotos: (review_id) => {
 
   //   return new Promise ((resolve, reject) => {
@@ -42,7 +43,6 @@ module.exports = {
   //   })
   // }
 
-};
 
 // // TEST
 // module.exports.getReviewPhotos(5)

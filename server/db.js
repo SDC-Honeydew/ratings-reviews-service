@@ -59,7 +59,9 @@ const Reviews_photo = sequelize.define('reviews_photo', {
 Review.hasMany(Reviews_photo, {
   foreignKey: 'review_id'
 });
-Reviews_photo.belongsTo(Review);
+Reviews_photo.belongsTo(Review, {
+  foreignKey: 'review_id'
+});
 
 // SYNC
 const syncReview = async () => {
