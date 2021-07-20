@@ -7,10 +7,12 @@ module.exports = {
     return new Promise ((resolve, reject) => {
 
       db.Review.findAll({
-        attributes: ['id', 'rating', 'summary', 'recommend', 'response', 'body', 'date', 'reviewer_name', 'helpfulness'],
+        attributes: [['id', 'review_id'], 'rating', 'summary', 'recommend', 'response', 'body', 'date', 'reviewer_name', 'helpfulness'],
         where: {
-          product_id: product_id
+          product_id: product_id,
+          reported: false
         },
+        // include: db.Reviews_photo,
         order: [['helpfulness', 'DESC']]
       })
         .then((reviews) => {
@@ -22,23 +24,23 @@ module.exports = {
     })
   },
 
-  getReviewPhotos: (review_id) => {
+  // getReviewPhotos: (review_id) => {
 
-    return new Promise ((resolve, reject) => {
+  //   return new Promise ((resolve, reject) => {
 
-      db.Reviews_photo.findAll({
-        where: {
-          review_id: review_id
-        }
-      })
-        .then((data) => {
-          resolve(data);
-        })
-        .catch((err) => {
-          reject(err);
-        })
-    })
-  }
+  //     db.Reviews_photo.findAll({
+  //       where: {
+  //         review_id: review_id
+  //       }
+  //     })
+  //       .then((data) => {
+  //         resolve(data);
+  //       })
+  //       .catch((err) => {
+  //         reject(err);
+  //       })
+  //   })
+  // }
 
 };
 

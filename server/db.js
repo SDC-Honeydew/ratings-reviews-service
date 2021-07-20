@@ -5,6 +5,7 @@ const sequelize = new Sequelize('atelier', 'mattwrobel', '', {
   dialect: 'postgres'
 });
 
+// MODELS
 const Review = sequelize.define('review', {
   product_id: {
     type: DataTypes.INTEGER
@@ -54,6 +55,13 @@ const Reviews_photo = sequelize.define('reviews_photo', {
   }
 }, {timestamps: false});
 
+// RELATIONS
+Review.hasMany(Reviews_photo, {
+  foreignKey: 'review_id'
+});
+Reviews_photo.belongsTo(Review);
+
+// SYNC
 const syncReview = async () => {
   await Review.sync();
   console.log("The table for the Review model was just (re)created!");
@@ -63,7 +71,6 @@ const syncReviews_photo = async () => {
   await Reviews_photo.sync();
   console.log("The table for the Reviews_photo model was just (re)created!");
 };
-
 
 syncReview();
 syncReviews_photo();
