@@ -7,43 +7,21 @@ const sequelize = new Sequelize('atelier', 'mattwrobel', '', {
 
 // MODELS
 const Review = sequelize.define('review', {
-  product_id: {
-    type: DataTypes.INTEGER
-  },
-  rating: {
-    type: DataTypes.INTEGER
-  },
-  date: {
-    type: DataTypes.BIGINT
-  },
-  summary: {
-    type: DataTypes.TEXT
-  },
-  body: {
-    type: DataTypes.TEXT
-  },
-  recommend: {
-    type: DataTypes.BOOLEAN
-  },
-  reported: {
-    type: DataTypes.BOOLEAN
-  },
-  reviewer_name: {
-    type: DataTypes.TEXT
-  },
-  reviewer_email: {
-    type: DataTypes.TEXT
-  },
-  response: {
-    type: DataTypes.TEXT
-  },
-  helpfulness: {
-    type: DataTypes.INTEGER
-  },
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true
-  }
+  },
+  product_id: DataTypes.INTEGER,
+  rating: DataTypes.INTEGER,
+  date: DataTypes.BIGINT,
+  summary: DataTypes.TEXT,
+  body: DataTypes.TEXT,
+  recommend: DataTypes.BOOLEAN,
+  reported: DataTypes.BOOLEAN,
+  reviewer_name: DataTypes.TEXT,
+  reviewer_email: DataTypes.TEXT,
+  response: DataTypes.TEXT,
+  helpfulness: DataTypes.INTEGER
 }, {timestamps: false});
 
 const Reviews_photo = sequelize.define('reviews_photo', {

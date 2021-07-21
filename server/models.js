@@ -34,8 +34,27 @@ module.exports = {
     })
   },
 
+  getReviewsMeta: (product_id) => {
+
+    return new Promise ((resolve, reject) => {
+      Review.findAll({
+        attributes: ['rating', 'recommend'],
+        where: {
+          product_id: product_id
+        }
+      })
+      .then((reviews) => {
+        resolve(reviews);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+    });
+
+  },
+
   getCharacteristicsMeta: (product_id) => {
-    console.log(product_id);
+
     return new Promise ((resolve, reject) => {
 
       Characteristic.findAll({
@@ -56,7 +75,6 @@ module.exports = {
         reject(err);
       })
     });
-
   }
 
 };
