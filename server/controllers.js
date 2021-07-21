@@ -5,12 +5,12 @@ exports.get = (req, res) => {
   const { page, count, sort, product_id } = req.query;
 
   return models.getReviews(page, count, sort, product_id)
-    .then((data) => {
+    .then((reviews) => {
       let response = {
         product: product_id.toString(),
         page: Number(page),
-        count: Number(count),
-        results: data
+        count: reviews.length,
+        results: reviews
       }
       res.status(200).send(response);
     })
