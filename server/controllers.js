@@ -4,18 +4,15 @@ exports.get = (req, res) => {
   console.log(req.query);
   const { page, count, sort, product_id } = req.query;
 
-  // get the reviews
-
-  // get the photos that go with each review and add them to the res object
-
   return models.getReviews(page, count, sort, product_id)
-    // .then((reviews) => {
-    //   return Promise.all(reviews.map((review) => {
-    //     getReviewPhotos(review.id);
-    //   }))
-    // })
     .then((data) => {
-      res.status(200).send(data);
+      let response = {
+        product: product_id.toString(),
+        page: Number(page),
+        count: Number(count),
+        results: data
+      }
+      res.status(200).send(response);
     })
     .catch((err) => {
       res.status(500).send(err);
