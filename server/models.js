@@ -34,12 +34,12 @@ module.exports = {
     })
   },
 
-  getMeta: (product_id) => {
+  getCharacteristicsMeta: (product_id) => {
     console.log(product_id);
     return new Promise ((resolve, reject) => {
 
       Characteristic.findAll({
-        attributes: ['id', 'product_id', 'name'],
+        attributes: ['id', 'name'],
         where: {
           product_id: product_id
         },
