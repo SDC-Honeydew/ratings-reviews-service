@@ -18,7 +18,8 @@ module.exports = {
         },
         include: {
           model: db.Reviews_photo,
-          as: 'photos'
+          as: 'photos',
+          attributes: ['id', 'url']
         },
         order: [[sortOrder, 'DESC']]
       })
