@@ -23,6 +23,12 @@ exports.getMeta = (req, res) => {
 
   const { product_id } = req.query;
 
-  res.status(200).send(models.getMeta(product_id));
+  return models.getMeta(product_id)
+    .then((meta) => {
+      res.status(200).send(meta);
+    })
+    .catch((err) => {
+      res.status(500).send(err);
+    })
 
 };

@@ -36,7 +36,22 @@ module.exports = {
 
   getMeta: (product_id) => {
     console.log(product_id);
-    return 'this will be the db query result';
+    return new Promise ((resolve, reject) => {
+
+      Characteristic.findAll({
+        attributes: ['id', 'product_id', 'name'],
+        where: {
+          product_id: product_id
+        },
+        // order: ['id', 'DESC']
+      })
+      .then((characteristics) => {
+        resolve(characteristics);
+      })
+      .catch((err) => {
+        reject(err);
+      })
+    });
 
   }
 
