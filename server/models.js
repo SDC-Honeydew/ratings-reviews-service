@@ -16,7 +16,10 @@ module.exports = {
           product_id: product_id,
           reported: false
         },
-        include: db.Reviews_photo,
+        include: {
+          model: db.Reviews_photo,
+          as: 'photos'
+        },
         order: [[sortOrder, 'DESC']]
       })
         .then((reviews) => {
@@ -29,41 +32,3 @@ module.exports = {
   },
 
 };
-  // getReviewPhotos: (review_id) => {
-
-  //   return new Promise ((resolve, reject) => {
-
-  //     db.Reviews_photo.findAll({
-  //       where: {
-  //         review_id: review_id
-  //       }
-  //     })
-  //       .then((data) => {
-  //         resolve(data);
-  //       })
-  //       .catch((err) => {
-  //         reject(err);
-  //       })
-  //   })
-  // }
-
-
-// // TEST
-// module.exports.getReviewPhotos(5)
-//   .then((photos) => {
-//     console.log(photos);
-//   })
-//   .catch((err) => {
-//     console.log(err);
-//   })
-
-    //   return new Promise ((resolve, reject) => {
-    //     db.query(`SELECT * FROM reviews WHERE product_id = ${req.query.product_id}`, (err, data) => {
-    //       if (err) {
-    //         reject(err);
-    //       } else {
-    //         resolve(data.rows);
-    //       }
-    //     });
-    //   });
-    // }
