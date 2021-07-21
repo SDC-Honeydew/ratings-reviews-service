@@ -2,20 +2,22 @@ const db = require('./db.js');
 
 module.exports = {
 
-  getReviews: (product_id, sort) => {
+  getReviews: (page, count, sort, product_id) => {
 
-    let order = sort === 'newest' ? 'date' : 'helpfulness';
+    let sortOrder = sort === 'newest' ? 'date' : 'helpfulness';
 
     return new Promise ((resolve, reject) => {
 
       db.Review.findAll({
         attributes: [['id', 'review_id'], 'rating', 'summary', 'recommend', 'response', 'body', 'date', 'reviewer_name', 'helpfulness'],
+        limit: count,
+        offset: (page * count ) - count,
         where: {
           product_id: product_id,
           reported: false
         },
         include: db.Reviews_photo,
-        order: [[order, 'DESC']]
+        order: [[sortOrder, 'DESC']]
       })
         .then((reviews) => {
           resolve(reviews);
