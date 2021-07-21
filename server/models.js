@@ -43,7 +43,11 @@ module.exports = {
         where: {
           product_id: product_id
         },
-        // order: ['id', 'DESC']
+        include: {
+          model: Characteristic_review,
+          attributes: ['value']
+        },
+        order: [['id', 'ASC']]
       })
       .then((characteristics) => {
         resolve(characteristics);
