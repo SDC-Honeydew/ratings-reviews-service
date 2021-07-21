@@ -1,7 +1,7 @@
 const models = require('./models.js');
 
 exports.get = (req, res) => {
-  console.log(req.query);
+
   const { page, count, sort, product_id } = req.query;
 
   return models.getReviews(page, count, sort, product_id)
@@ -17,4 +17,12 @@ exports.get = (req, res) => {
     .catch((err) => {
       res.status(500).send(err);
     })
-}
+};
+
+exports.getMeta = (req, res) => {
+
+  const { product_id } = req.query;
+
+  res.status(200).send(models.getMeta(product_id));
+
+};

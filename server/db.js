@@ -55,6 +55,25 @@ const Reviews_photo = sequelize.define('reviews_photo', {
   }
 }, {timestamps: false});
 
+const Characteristic = sequelize.define('characteristic', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true
+  },
+  product_id: DataTypes.INTEGER,
+  name: DataTypes.TEXT
+});
+
+const Characteristic_review = sequelize.define('characteristic_review', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true
+  },
+  characteristic_id: DataTypes.INTEGER,
+  review_id: DataTypes.INTEGER,
+  value: DataTypes.INTEGER
+});
+
 // RELATIONS
 Review.hasMany(Reviews_photo, {
   as: 'photos',
@@ -64,22 +83,40 @@ Reviews_photo.belongsTo(Review, {
   foreignKey: 'review_id'
 });
 
+Characteristic.hasMany(Characteristic_review, {
+  foreignKey: 'characteristic_id'
+});
+Characteristic_review.belongsTo(Characteristic, {
+  foreignKey: 'characteristic_id'
+})
+
 // SYNC
-const syncReview = async () => {
-  await Review.sync();
-  console.log("The table for the Review model was just (re)created!");
-};
 
-const syncReviews_photo = async () => {
-  await Reviews_photo.sync();
-  console.log("The table for the Reviews_photo model was just (re)created!");
-};
+const syncDb = async () => {
+  await sequelize.sync();
+  console.log("All models were synchronized successfully.");
+}
 
-syncReview();
-syncReviews_photo();
+syncDb();
 
 module.exports.Review = Review;
 module.exports.Reviews_photo = Reviews_photo;
+module.exports.Characteristic = Characteristic;
+module.exports.Characteristic_review = Characteristic_review;
+
+// const syncReview = async () => {
+//   await Review.sync();
+//   console.log("The table for the Review model was just (re)created!");
+// };
+
+// const syncReviews_photo = async () => {
+//   await Reviews_photo.sync();
+//   console.log("The table for the Reviews_photo model was just (re)created!");
+// };
+
+// syncReview();
+// syncReviews_photo();
+
 
 // const testConnection = async () => {
 //   try {

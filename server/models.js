@@ -1,4 +1,6 @@
-const db = require('./db.js');
+// const db = require('./db.js');
+
+const { Review, Reviews_photo, Characteristic, Characteristic_review } = require('./db.js');
 
 module.exports = {
 
@@ -8,7 +10,7 @@ module.exports = {
 
     return new Promise ((resolve, reject) => {
 
-      db.Review.findAll({
+      Review.findAll({
         attributes: [['id', 'review_id'], 'rating', 'summary', 'recommend', 'response', 'body', 'date', 'reviewer_name', 'helpfulness'],
         limit: count,
         offset: (page * count ) - count,
@@ -17,7 +19,7 @@ module.exports = {
           reported: false
         },
         include: {
-          model: db.Reviews_photo,
+          model: Reviews_photo,
           as: 'photos',
           attributes: ['id', 'url']
         },
@@ -31,5 +33,11 @@ module.exports = {
         })
     })
   },
+
+  getMeta: (product_id) => {
+    console.log(product_id);
+    return 'this will be the db query result';
+
+  }
 
 };
