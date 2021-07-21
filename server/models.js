@@ -2,7 +2,9 @@ const db = require('./db.js');
 
 module.exports = {
 
-  getReviews: (product_id) => {
+  getReviews: (product_id, sort) => {
+
+    let order = sort === 'newest' ? 'date' : 'helpfulness';
 
     return new Promise ((resolve, reject) => {
 
@@ -13,7 +15,7 @@ module.exports = {
           reported: false
         },
         include: db.Reviews_photo,
-        order: [['helpfulness', 'DESC']]
+        order: [[order, 'DESC']]
       })
         .then((reviews) => {
           resolve(reviews);

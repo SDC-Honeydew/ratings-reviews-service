@@ -2,13 +2,13 @@ const models = require('./models.js');
 
 exports.get = (req, res) => {
   console.log(req.query);
-  const { product_id } = req.query;
+  const { product_id, sort } = req.query;
 
   // get the reviews
 
   // get the photos that go with each review and add them to the res object
 
-  return models.getReviews(product_id)
+  return models.getReviews(product_id, sort)
     // .then((reviews) => {
     //   return Promise.all(reviews.map((review) => {
     //     getReviewPhotos(review.id);
