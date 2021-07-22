@@ -74,6 +74,7 @@ exports.getMeta = (req, res) => {
       res.status(500).send(err);
     })
 
+  };
   // return models.getReviewsMeta(product_id)
   //   .then(reviews => res.status(200).send(reviews));
 
@@ -108,4 +109,3 @@ exports.getMeta = (req, res) => {
   //     res.status(500).send(err);
   //   })
 
-};
