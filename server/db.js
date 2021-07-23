@@ -30,14 +30,16 @@ const Reviews_photo = sequelize.define('reviews_photo', {
   url: DataTypes.TEXT,
   id: {
     type: DataTypes.INTEGER,
-    primaryKey: true
+    primaryKey: true,
+    autoIncrement: true
   }
 }, {timestamps: false});
 
 const Characteristic = sequelize.define('characteristic', {
   id: {
     type: DataTypes.INTEGER,
-    primaryKey: true
+    primaryKey: true,
+    autoIncrement: true
   },
   product_id: DataTypes.INTEGER,
   name: DataTypes.TEXT
@@ -46,7 +48,8 @@ const Characteristic = sequelize.define('characteristic', {
 const Characteristic_review = sequelize.define('characteristic_review', {
   id: {
     type: DataTypes.INTEGER,
-    primaryKey: true
+    primaryKey: true,
+    autoIncrement: true
   },
   characteristic_id: DataTypes.INTEGER,
   review_id: DataTypes.INTEGER,

@@ -80,7 +80,7 @@ exports.getMeta = (req, res) => {
 
     models.postReview(req.body)
       .then((response) => {
-        res.status(200).send(response, 'THIS ROUTE WILL RESPOND WITH: CREATED');
+        res.status(201).send('CREATED');
       })
       .catch((err) => {
         res.status(500).send(err);

@@ -101,6 +101,7 @@ module.exports = {
         helpfulness: 0
       })
       .then((dbResponse) => {
+        console.log(dbResponse.id);
         resolve(dbResponse);
       })
       .catch((err) => {
