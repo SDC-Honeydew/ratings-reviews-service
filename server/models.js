@@ -85,7 +85,7 @@ module.exports = {
     // ADD HELPFULNESS = 0
 
     console.log(review);
-
+    let review_id;
     return new Promise((resolve, reject) => {
       Review.create({
         product_id: review.product_id,
@@ -100,9 +100,32 @@ module.exports = {
         response: null,
         helpfulness: 0
       })
-      .then((dbResponse) => {
-        console.log(dbResponse.id);
-        resolve(dbResponse);
+      .then((insertedReview) => {
+        review_id = insertedReview.id;
+        review.photos = review.photos.map((url) => {
+          return {
+            review_id: review_id,
+            url: url
+          }
+        });
+        return Reviews_photo.bulkCreate(review.photos);
+      })
+      .then((insertedPhotos) => {
+        let characteristicReviews = [];
+        for (let characteristic in review.characteristics) {
+          characteristicReviews.push(
+            {
+              characteristic_id: Number(characteristic),
+              review_id: review_id,
+              value: review.characteristics[characteristic]
+            }
+          );
+        }
+        return Characteristic_review.bulkCreate(characteristicReviews);
+
+      })
+      .then((insertedCharacteristicReviews) => {
+        resolve();
       })
       .catch((err) => {
         reject(err);

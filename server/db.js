@@ -54,7 +54,7 @@ const Characteristic_review = sequelize.define('characteristic_review', {
   characteristic_id: DataTypes.INTEGER,
   review_id: DataTypes.INTEGER,
   value: DataTypes.INTEGER
-});
+}, {timestamps: false});
 
 // RELATIONS
 Review.hasMany(Reviews_photo, {
