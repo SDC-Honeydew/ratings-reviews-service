@@ -75,6 +75,26 @@ exports.getMeta = (req, res) => {
     })
 
   };
+
+  exports.postReview = ((req, res) => {
+
+    models.postReview(req.body)
+      .then((response) => {
+        res.status(200).send(response, 'THIS ROUTE WILL RESPOND WITH: CREATED');
+      })
+      .catch((err) => {
+        res.status(500).send(err);
+      })
+  });
+
+  exports.helpful = ((req, res) => {
+    res.status(204).send('THIS ROUTE WILL RESPOND WITH: NO CONTENT');
+  });
+
+  exports.report = ((req, res) => {
+    res.status(204).send('THIS ROUTE WILL RESPOND WITH: NO CONTENT');
+  });
+
   // return models.getReviewsMeta(product_id)
   //   .then(reviews => res.status(200).send(reviews));
 

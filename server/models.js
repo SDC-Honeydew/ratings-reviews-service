@@ -75,6 +75,38 @@ module.exports = {
         reject(err);
       })
     });
+  },
+
+  postReview: (review) => {
+
+    // ADD A DATE/TIMESTAMP TO THE REVIEW
+    // ADD REPORTED = FALSE TO REVIEW
+    // (RESPONSE WILL BE NULL (HOPEFULLY))
+    // ADD HELPFULNESS = 0
+
+    console.log(review);
+
+    return new Promise((resolve, reject) => {
+      Review.create({
+        product_id: review.product_id,
+        rating: review.rating,
+        date: new Date().getTime(),
+        summary: review.summary,
+        body: review.body,
+        recommend: review.recommend,
+        reported: false,
+        reviewer_name: review.reviewer_name,
+        reviewer_email: review.reviewer_email,
+        response: null,
+        helpfulness: 0
+      })
+      .then((dbResponse) => {
+        resolve(dbResponse);
+      })
+      .catch((err) => {
+        reject(err);
+      })
+    });
   }
 
 };

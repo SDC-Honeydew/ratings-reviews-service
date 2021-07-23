@@ -9,7 +9,8 @@ const sequelize = new Sequelize('atelier', 'mattwrobel', '', {
 const Review = sequelize.define('review', {
   id: {
     type: DataTypes.INTEGER,
-    primaryKey: true
+    primaryKey: true,
+    autoIncrement: true
   },
   product_id: DataTypes.INTEGER,
   rating: DataTypes.INTEGER,
