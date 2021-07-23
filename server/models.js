@@ -79,12 +79,6 @@ module.exports = {
 
   postReview: (review) => {
 
-    // ADD A DATE/TIMESTAMP TO THE REVIEW
-    // ADD REPORTED = FALSE TO REVIEW
-    // (RESPONSE WILL BE NULL (HOPEFULLY))
-    // ADD HELPFULNESS = 0
-
-    console.log(review);
     let review_id;
     return new Promise((resolve, reject) => {
       Review.create({
@@ -101,6 +95,7 @@ module.exports = {
         helpfulness: 0
       })
       .then((insertedReview) => {
+        // build the photo objects -- refactor to helper?
         review_id = insertedReview.id;
         review.photos = review.photos.map((url) => {
           return {
@@ -108,9 +103,7 @@ module.exports = {
             url: url
           }
         });
-        return Reviews_photo.bulkCreate(review.photos);
-      })
-      .then((insertedPhotos) => {
+        // build the characteristic objects -- refactor to helper?
         let characteristicReviews = [];
         for (let characteristic in review.characteristics) {
           characteristicReviews.push(
@@ -121,11 +114,10 @@ module.exports = {
             }
           );
         }
-        return Characteristic_review.bulkCreate(characteristicReviews);
-
+        return Promise.all([Reviews_photo.bulkCreate(review.photos), Characteristic_review.bulkCreate(characteristicReviews)]);
       })
-      .then((insertedCharacteristicReviews) => {
-        resolve();
+      .then((results) => {
+        resolve(results);
       })
       .catch((err) => {
         reject(err);
