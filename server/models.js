@@ -1,15 +1,10 @@
-// const db = require('./db.js');
-
 const { Review, Reviews_photo, Characteristic, Characteristic_review } = require('./db.js');
 
 module.exports = {
 
   getReviews: (page, count, sort, product_id) => {
-
     let sortOrder = sort === 'newest' ? 'date' : 'helpfulness';
-
     return new Promise ((resolve, reject) => {
-
       Review.findAll({
         attributes: [['id', 'review_id'], 'rating', 'summary', 'recommend', 'response', 'body', 'date', 'reviewer_name', 'helpfulness'],
         limit: count,
@@ -35,7 +30,6 @@ module.exports = {
   },
 
   getReviewsMeta: (product_id) => {
-
     return new Promise ((resolve, reject) => {
       Review.findAll({
         attributes: ['rating', 'recommend'],
@@ -50,13 +44,10 @@ module.exports = {
         reject(err);
       });
     });
-
   },
 
   getCharacteristicsMeta: (product_id) => {
-
     return new Promise ((resolve, reject) => {
-
       Characteristic.findAll({
         attributes: ['id', 'name'],
         where: {
@@ -77,8 +68,8 @@ module.exports = {
     });
   },
 
+  // refactor this to be individual funciton calls to models, combine them in controllers instead of doing it all here
   postReview: (review) => {
-
     let review_id;
     return new Promise((resolve, reject) => {
       Review.create({
@@ -95,7 +86,7 @@ module.exports = {
         helpfulness: 0
       })
       .then((insertedReview) => {
-        // build the photo objects -- refactor to helper?
+        // build the photo objects -- refactor to helper
         review_id = insertedReview.id;
         review.photos = review.photos.map((url) => {
           return {
@@ -103,7 +94,7 @@ module.exports = {
             url: url
           }
         });
-        // build the characteristic objects -- refactor to helper?
+        // build the characteristic objects -- refactor to helper
         let characteristicReviews = [];
         for (let characteristic in review.characteristics) {
           characteristicReviews.push(
@@ -123,6 +114,38 @@ module.exports = {
         reject(err);
       })
     });
+  },
+
+  markHelpful: (review_id) => {
+    return new Promise((resolve, reject) => {
+      Review.increment('helpfulness', {
+        where: {
+          id: review_id
+        }
+      })
+      .then((response) => {
+        resolve(response);
+      })
+      .catch((err) => {
+        reject(err);
+      })
+    })
+  },
+
+  report: (review_id) => {
+    return new Promise((resolve, reject) => {
+      Review.update({reported: true}, {
+        where: {
+          id: review_id
+        }
+      })
+      .then((result) => {
+        resolve(result);
+      })
+      .catch((err) => {
+        reject(err);
+      })
+    })
   }
 
 };
