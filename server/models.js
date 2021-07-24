@@ -6,7 +6,7 @@ module.exports = {
     let sortOrder = sort === 'newest' ? 'date' : 'helpfulness';
     return new Promise ((resolve, reject) => {
       Review.findAll({
-        attributes: [['id', 'review_id'], 'rating', 'summary', 'recommend', 'response', 'body', 'date', 'reviewer_name', 'helpfulness'],
+        attributes: [['id', 'review_id'], 'rating', 'summary', 'recommend', 'response', 'body', ['date_time', 'date'], 'reviewer_name', 'helpfulness'],
         limit: count,
         offset: (page * count ) - count,
         where: {
@@ -75,7 +75,8 @@ module.exports = {
       Review.create({
         product_id: review.product_id,
         rating: review.rating,
-        date: new Date().getTime(),
+        date: new Date().getTime(), // REMOVE THIS LATER
+        date_time: new Date().toISOString(),
         summary: review.summary,
         body: review.body,
         recommend: review.recommend,

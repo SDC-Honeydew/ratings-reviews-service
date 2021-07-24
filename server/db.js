@@ -8,6 +8,7 @@ const sequelize = new Sequelize('atelier', 'mattwrobel', '', {
 });
 
 // MODELS
+// TURN OFF LOGGING
 const Review = sequelize.define('review', {
   id: {
     type: DataTypes.INTEGER,
@@ -17,6 +18,7 @@ const Review = sequelize.define('review', {
   product_id: DataTypes.INTEGER,
   rating: DataTypes.INTEGER,
   date: DataTypes.BIGINT,
+  date_time: DataTypes.DATE,
   summary: DataTypes.TEXT,
   body: DataTypes.TEXT,
   recommend: DataTypes.BOOLEAN,
