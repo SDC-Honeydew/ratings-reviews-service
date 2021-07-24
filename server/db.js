@@ -17,8 +17,8 @@ const Review = sequelize.define('review', {
   },
   product_id: DataTypes.INTEGER,
   rating: DataTypes.INTEGER,
-  date: DataTypes.BIGINT,
-  date_time: DataTypes.DATE,
+  date: DataTypes.BIGINT,  // remove this
+  date_time: DataTypes.DATE,  // rename this to date
   summary: DataTypes.TEXT,
   body: DataTypes.TEXT,
   recommend: DataTypes.BOOLEAN,
