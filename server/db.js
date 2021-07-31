@@ -1,11 +1,13 @@
 // REFACTOR THIS ENTIRE FILE
-// require('dotenv').config()
+require('dotenv').config()
 const { Sequelize, DataTypes } = require('sequelize');
 // refactor to use environment varaibles
-const sequelize = new Sequelize('atelier', 'mattwrobel', '', {
-  host: 'localhost',
-  dialect: 'postgres'
-});
+const uri = process.env.URI;
+const sequelize = new Sequelize(uri);
+// const sequelize = new Sequelize('atelier', 'mattwrobel', '', {
+//   host: 'localhost',
+//   dialect: 'postgres'
+// });
 
 // MODELS
 // TURN OFF LOGGING

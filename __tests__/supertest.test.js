@@ -20,9 +20,9 @@ describe('GET /reviews route', () => {
   })
   it('responds to a get request with the product code', async () => {
     const res = await request(app).get('/reviews?page=1&count=8&sort=newest&product_id=20')
-      // console.log(res.body)
       expect(res.body.product).toEqual('20')
   })
+
 });
 
 describe('GET /meta route', () => {
