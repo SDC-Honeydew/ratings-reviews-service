@@ -1,4 +1,5 @@
-// REFACTOR THIS ENTIRE FILE
+// DELETE THIS FILE--REFACTORED!
+
 // require('dotenv').config()
 // const { Sequelize, DataTypes } = require('sequelize');
 // const uri = process.env.URI;
