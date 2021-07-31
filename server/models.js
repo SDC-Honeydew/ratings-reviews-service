@@ -1,11 +1,19 @@
-const { Review, Reviews_photo, Characteristic, Characteristic_review } = require('./db.js');
+//const { Review, Reviews_photo, Characteristic, Characteristic_review } = require('./db.js');
+
+const { models } = require('./sequelize');
+
+const Review = require('./sequelize/models/review.model');
+const Reviews_photo = require('./sequelize/models/reviews_photo.model');
+const Characteristic = require('./sequelize/models/characteristic.model');
+const Characteristic_review = require('./sequelize/models/characteristic_review.model');
 
 module.exports = {
 
   getReviews: (page, count, sort, product_id) => {
+    console.log(product_id);
     let sortOrder = sort === 'newest' ? 'date' : 'helpfulness';
     return new Promise ((resolve, reject) => {
-      Review.findAll({
+      models.review.findAll({
         attributes: [['id', 'review_id'], 'rating', 'summary', 'recommend', 'response', 'body', ['date_time', 'date'], 'reviewer_name', 'helpfulness'],
         limit: count,
         offset: (page * count ) - count,
@@ -14,7 +22,7 @@ module.exports = {
           reported: false
         },
         include: {
-          model: Reviews_photo,
+          model: models.reviews_photo,
           as: 'photos',
           attributes: ['id', 'url']
         },
