@@ -1,9 +1,6 @@
-const express = require('express');
-const app = express();
+const app = require('./server')
+const port = 8000;
 const sequelize = require('./sequelize');
-const router = require('./router.js');
-app.use(express.json());
-app.use('/', router);
 
 const assertDatabaseConnectionOk = async () => {
 	console.log(`Checking database connection...`);
@@ -25,8 +22,9 @@ const syncDb = async () => {
 const init = async () => {
 	await assertDatabaseConnectionOk();
 	await syncDb();
+  app.listen(port, () => {
+    console.log(`Server is listening at http://localhost:${port}`)
+  });
 }
 
 init();
-
-module.exports = app;

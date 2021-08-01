@@ -1,39 +1,5 @@
 const app = require('../server/server.js');
 const request = require('supertest');
-// const { Pool, Client } = require('pg')
-
-// to actually test the database
-// before the tests run, make a new database
-// insert some data into it
-// run tests on the data
-// after each test, delete the database
-
-// const client = new Client('postgres://mattwrobel@localhost:5432/atelier')
-
-// const connectDb = async () => {
-//   return await client.connect(err => {
-//     if (err) {
-//       console.log('connection error: ', err)
-//     } else {
-//       console.log('connected')
-//     }
-//   })
-
-  // await client.query('SELECT NOW()', (err, res) => {
-  //   console.log(err, res)
-  // })
-
-// }
-
-// beforeAll(async () => {
-//   await client.connect(err => {
-//     if (err) {
-//       console.log('connection error: ', err)
-//     } else {
-//       console.log('connected')
-//     }
-//   })
-// })
 
 beforeEach(async () => {
   console.log('before the test runs');
@@ -45,9 +11,6 @@ beforeEach(async () => {
 })
 
 describe('GET /reviews route', () => {
-
-
-
 
   it('responds to a get request with the expected number of reviews', async () => {
     const res = await request(app).get('/reviews?page=1&count=8&sort=newest&product_id=20')
