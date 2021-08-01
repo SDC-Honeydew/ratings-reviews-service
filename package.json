@@ -6,7 +6,7 @@
   "scripts": {
     "server-dev": "nodemon index.js",
     "start": "node index.js",
-    "test": "jest --detectOpenHandles --coverage"
+    "test": "jest --coverage"
   },
   "repository": {
     "type": "git",

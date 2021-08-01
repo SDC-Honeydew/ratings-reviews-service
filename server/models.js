@@ -3,7 +3,6 @@ const { models } = require('../sequelize');
 module.exports = {
 
   getReviews: (page, count, sort, product_id) => {
-    console.log(product_id);
     let sortOrder = sort === 'newest' ? 'date' : 'helpfulness';
     return new Promise ((resolve, reject) => {
       models.review.findAll({

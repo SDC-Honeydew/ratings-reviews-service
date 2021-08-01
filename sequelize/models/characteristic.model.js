@@ -9,5 +9,5 @@ module.exports = (sequelize) => {
     },
     product_id: DataTypes.INTEGER,
     name: DataTypes.TEXT
-  });
+  }, {timestamps: false});
 }
