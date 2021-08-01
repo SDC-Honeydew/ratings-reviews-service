@@ -1,11 +1,11 @@
-const { Review, Reviews_photo, Characteristic, Characteristic_review } = require('./db.js');
+const { models } = require('../sequelize');
 
 module.exports = {
 
   getReviews: (page, count, sort, product_id) => {
     let sortOrder = sort === 'newest' ? 'date' : 'helpfulness';
     return new Promise ((resolve, reject) => {
-      Review.findAll({
+      models.review.findAll({
         attributes: [['id', 'review_id'], 'rating', 'summary', 'recommend', 'response', 'body', ['date_time', 'date'], 'reviewer_name', 'helpfulness'],
         limit: count,
         offset: (page * count ) - count,
@@ -14,7 +14,7 @@ module.exports = {
           reported: false
         },
         include: {
-          model: Reviews_photo,
+          model: models.reviews_photo,
           as: 'photos',
           attributes: ['id', 'url']
         },
@@ -31,7 +31,7 @@ module.exports = {
 
   getReviewsMeta: (product_id) => {
     return new Promise ((resolve, reject) => {
-      Review.findAll({
+      models.review.findAll({
         attributes: ['rating', 'recommend'],
         where: {
           product_id: product_id
@@ -48,13 +48,13 @@ module.exports = {
 
   getCharacteristicsMeta: (product_id) => {
     return new Promise ((resolve, reject) => {
-      Characteristic.findAll({
+      models.characteristic.findAll({
         attributes: ['id', 'name'],
         where: {
           product_id: product_id
         },
         include: {
-          model: Characteristic_review,
+          model: models.characteristic_review,
           attributes: ['value']
         },
         order: [['id', 'ASC']]
@@ -72,7 +72,7 @@ module.exports = {
   postReview: (review) => {
     let review_id;
     return new Promise((resolve, reject) => {
-      Review.create({
+      models.review.create({
         product_id: review.product_id,
         rating: review.rating,
         date: new Date().getTime(), // REMOVE THIS LATER
@@ -106,7 +106,7 @@ module.exports = {
             }
           );
         }
-        return Promise.all([Reviews_photo.bulkCreate(review.photos), Characteristic_review.bulkCreate(characteristicReviews)]);
+        return Promise.all([models.reviews_photo.bulkCreate(review.photos), models.characteristic_review.bulkCreate(characteristicReviews)]);
       })
       .then((results) => {
         resolve(results);
@@ -119,7 +119,7 @@ module.exports = {
 
   markHelpful: (review_id) => {
     return new Promise((resolve, reject) => {
-      Review.increment('helpfulness', {
+      models.review.increment('helpfulness', {
         where: {
           id: review_id
         }
@@ -135,7 +135,7 @@ module.exports = {
 
   report: (review_id) => {
     return new Promise((resolve, reject) => {
-      Review.update({reported: true}, {
+      models.review.update({reported: true}, {
         where: {
           id: review_id
         }

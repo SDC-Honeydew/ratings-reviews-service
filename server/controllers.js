@@ -13,6 +13,7 @@ exports.get = (req, res) => {
       res.status(200).send(response);
     })
     .catch((err) => {
+      console.log(err);
       res.status(500).send(err);
     })
 };
@@ -66,11 +67,13 @@ exports.getMeta = (req, res) => {
   };
 
 exports.postReview = ((req, res) => {
+  console.log('post request body: ', req.body);
   models.postReview(req.body)
     .then((response) => {
       res.status(201).send('CREATED');
     })
     .catch((err) => {
+      console.log('post request error: ', err)
       res.status(500).send(err);
     })
 });

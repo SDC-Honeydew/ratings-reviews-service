@@ -1,6 +1,7 @@
-const app = require('./server.js')
-const port = 8000;
+const express = require('express');
+const app = express();
+const router = require('./router.js');
+app.use(express.json());
+app.use('/', router);
 
-app.listen(port, () => {
-  console.log(`Server is listening at http://localhost:${port}`)
-});
+module.exports = app;
