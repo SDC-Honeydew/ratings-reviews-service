@@ -3,24 +3,7 @@ const sequelize = require('../sequelize');
 const request = require('supertest');
 
 beforeAll(async () => {
-  // move setup function declarations to different file?
-  const assertDatabaseConnectionOk = async () => {
-    console.log(`Checking database connection...`);
-    try {
-      await sequelize.authenticate();
-      console.log('Database connection OK!');
-    } catch (error) {
-      console.log('Unable to connect to the database:');
-      console.log(error.message);
-      process.exit(1);
-    }
-  }
-
-  const syncDb = async () => {
-    await sequelize.sync();
-    console.log("All models were synchronized successfully.");
-  }
-
+  const { assertDatabaseConnectionOk, syncDb } = require('../sequelize/helpers');
   await Promise.all([assertDatabaseConnectionOk(), syncDb()]);
 })
 
@@ -89,14 +72,16 @@ describe('GET /meta route', () => {
 
 });
 
-xdescribe('PUT /helpful route', () => {
+// this passes no matter what...
+describe('PUT /helpful route', () => {
   it('responds with 204', async () => {
     const res = await request(server).put('/reviews/000/helpful')
       expect(res.statusCode).toEqual(204)
   })
 });
 
-xdescribe('PUT /report route', () => {
+// this passes no matter what...
+describe('PUT /report route', () => {
   it('responds with 204', async () => {
     const res = await request(server).put('/reviews/000/report')
       expect(res.statusCode).toEqual(204)
