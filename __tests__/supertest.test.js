@@ -96,8 +96,8 @@ afterAll(async () => {
       reviews_photo.destroy({where: {}}),
       characteristic_review.destroy({where: {}})
     ])
-    await sequelize.close();
   } catch (err) {
     console.log('teardown error: ', err);
   }
+  await sequelize.close();
 });
