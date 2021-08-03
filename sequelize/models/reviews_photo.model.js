@@ -9,5 +9,13 @@ module.exports = (sequelize) => {
       primaryKey: true,
       autoIncrement: true
     }
-  }, {timestamps: false});
+  }, {
+    timestamps: false,
+    indexes: [
+      {
+        using: 'BTREE',
+        fields: ['review_id']
+      }
+    ]
+  });
 }

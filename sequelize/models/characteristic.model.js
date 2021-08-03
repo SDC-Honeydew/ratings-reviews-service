@@ -9,5 +9,13 @@ module.exports = (sequelize) => {
     },
     product_id: DataTypes.INTEGER,
     name: DataTypes.TEXT
-  }, {timestamps: false});
+  }, {
+    timestamps: false,
+    indexes: [
+      {
+        using: 'BTREE',
+        fields: ['product_id']
+      }
+    ]
+  });
 }

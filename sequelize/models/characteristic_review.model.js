@@ -10,5 +10,13 @@ module.exports = (sequelize) => {
     characteristic_id: DataTypes.INTEGER,
     review_id: DataTypes.INTEGER,
     value: DataTypes.INTEGER
-  }, {timestamps: false});
+  }, {
+    timestamps: false,
+    indexes: [
+      {
+        using: 'BTREE',
+        fields: ['characteristic_id']
+      }
+    ]
+  });
 }
