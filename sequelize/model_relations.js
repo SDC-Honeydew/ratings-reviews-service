@@ -9,7 +9,6 @@ const initModelRelations = (sequelize) => {
     foreignKey: 'review_id'
   });
 
-  // add foreign key relationship between characteristic reviews and reviews
   review.hasMany(characteristic_review, {
     foreignKey: 'review_id',
   })
