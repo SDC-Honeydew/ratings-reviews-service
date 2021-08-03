@@ -26,6 +26,6 @@ module.exports = (sequelize) => {
         using: 'BTREE',
         fields: ['product_id']
       }
-    ],
+    ]
   });
 }
