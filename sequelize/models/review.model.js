@@ -19,5 +19,13 @@ module.exports = (sequelize) => {
     reviewer_email: DataTypes.TEXT,
     response: DataTypes.TEXT,
     helpfulness: DataTypes.INTEGER
-  }, {timestamps: false});
+  }, {timestamps: false}, {
+    indexes: [
+      {
+        name: 'reviews_product_id_idx',
+        using: 'BTREE',
+        fields: ['product_id']
+      }
+    ],
+  });
 }
