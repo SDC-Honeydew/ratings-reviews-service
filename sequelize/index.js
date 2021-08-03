@@ -1,8 +1,8 @@
 require('dotenv').config();
 const { Sequelize } = require('sequelize');
-const { modelRelations}  = require('./model_relations');
+const { initModelRelations }  = require('./model_relations');
+// use the test db if testing...
 const uri = process.env.NODE_ENV === 'test' ? process.env.URI_TEST : process.env.URI;
-// const uri = process.env.URI;
 
 const sequelize = new Sequelize(uri);
 
@@ -17,6 +17,6 @@ for (const modelDefiner of modelDefiners) {
 	modelDefiner(sequelize);
 };
 
-modelRelations(sequelize);
+initModelRelations(sequelize);
 
 module.exports = sequelize;
