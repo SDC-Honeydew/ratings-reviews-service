@@ -1,7 +1,13 @@
 const models = require('./models.js');
 
 exports.get = (req, res) => {
-  const { page, count, sort, product_id } = req.query;
+  // const { page, count, sort, product_id } = req.query;
+  // add default parameters here...
+  const { product_id } = req.query;
+  const page  = req.query.page || 1;
+  const count = req.query.count || 5;
+  const sort = req.query.sort || 'newest';
+
   return models.getReviews(page, count, sort, product_id)
     .then((reviews) => {
       let response = {
