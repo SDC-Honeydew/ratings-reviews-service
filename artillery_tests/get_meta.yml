@@ -1,0 +1,23 @@
+config:
+  target: "http://localhost:8000"
+  phases:
+    - duration: 30
+      arrivalRate: 5
+      name: warm up
+    - duration: 30
+      arrivalRate: 5
+      rampTo: 50
+      name: Ramp up load
+    - duration: 30
+      arrivalRate: 100
+      name: Sustained load
+  payload:
+    path: "../../SDC-application-data/product.csv"
+    fields:
+      - "id"
+
+scenarios:
+  - name: "search"
+    flow:
+      - get:
+          url: "/reviews/meta?product_id={{id}}"
