@@ -1,3 +1,4 @@
+// require('newrelic');
 const app = require('./server')
 const port = 8000;
 const { assertDatabaseConnectionOk, syncDb } = require('./sequelize/helpers');

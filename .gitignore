@@ -2,3 +2,5 @@ node_modules
 .env
 /coverage
 reviews.yml
+newrelic.js
+newrelic_agent.log
