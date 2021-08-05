@@ -17,7 +17,7 @@ exports.get = (req, res) => {
       res.status(200).send(response);
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
       res.status(500).send(err);
     })
 };
@@ -71,7 +71,7 @@ exports.getMeta = (req, res) => {
   };
 
 exports.postReview = ((req, res) => {
-  console.log('post request body: ', req.body);
+  // console.log('post request body: ', req.body);
   models.postReview(req.body)
     .then((response) => {
       res.status(201).send('CREATED');
