@@ -11,7 +11,7 @@ config:
       rampTo: 100
       name: Ramp up load
     - duration: 10
-      arrivalRate: 1000
+      arrivalRate: 500
       name: Sustained load
   payload:
     path: "../../SDC-application-data/product.csv"
