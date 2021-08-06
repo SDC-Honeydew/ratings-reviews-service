@@ -1,25 +1,58 @@
-const models = require('./models.js');
+// const models = require('./models.js');
+const { models } = require('../sequelize');
 
-exports.get = (req, res) => {
+exports.get = async (req, res) => {
   const { product_id } = req.query;
   const page  = req.query.page || 1;
   const count = req.query.count || 5;
   const sort = req.query.sort || 'newest';
+  const sortOrder = sort === 'newest' ? 'date' : 'helpfulness';
 
-  return models.getReviews(page, count, sort, product_id)
-    .then((reviews) => {
-      let response = {
-        product: product_id.toString(),
-        page: Number(page),
-        count: reviews.length,
-        results: reviews
-      }
-      res.status(200).send(response);
+  try {
+    // const reviews = await models.getReviews(page, count, sort, product_id);
+    const reviews = await models.review.findAll({
+      attributes: [['id', 'review_id'], 'rating', 'summary', 'recommend', 'response', 'body', ['date_time', 'date'], 'reviewer_name', 'helpfulness'],
+      limit: count,
+      offset: (page * count ) - count,
+      where: {
+        product_id: product_id,
+        reported: false
+      },
+      include: {
+        model: models.reviews_photo,
+        as: 'photos',
+        attributes: ['id', 'url']
+      },
+      order: [[sortOrder, 'DESC']]
     })
-    .catch((err) => {
-      // console.log(err);
-      res.status(500).send(err);
-    })
+    const response = {
+      product: product_id.toString(),
+      page: Number(page),
+      count: reviews.length,
+      results: reviews
+    }
+    res.status(200).send(response);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
+
+
+
+  // return models.getReviews(page, count, sort, product_id)
+  //   .then((reviews) => {
+  //     let response = {
+  //       product: product_id.toString(),
+  //       page: Number(page),
+  //       count: reviews.length,
+  //       results: reviews
+  //     }
+  //     res.status(200).send(response);
+  //   })
+  //   .catch((err) => {
+  //     // console.log(err);
+  //     res.status(500).send(err);
+  //   })
 };
 
 exports.getMeta = (req, res) => {
