@@ -4,8 +4,8 @@ exports.get = async (req, res) => {
   const { product_id } = req.query;
   const page  = req.query.page || 1;
   const count = req.query.count || 5;
-  const sort = req.query.sort || 'newest';
-  const sortOrder = sort === 'newest' ? 'date' : 'helpfulness';
+  const sort = req.query.sort || 'newest'; // refactor this
+  const sortOrder = sort === 'newest' ? 'date' : 'helpfulness'; // ...and this
 
   try {
     const reviews = await models.review.findAll({
@@ -31,7 +31,7 @@ exports.get = async (req, res) => {
     }
     res.status(200).send(response);
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     res.status(500).send(err);
   }
 };
