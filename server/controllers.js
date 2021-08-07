@@ -32,15 +32,13 @@ exports.get = async (req, res) => {
     }
     res.status(200).send(response);
   } catch (err) {
-    // console.log(err);
     res.status(500).send(err);
   }
 };
 
 exports.getMeta = async (req, res) => {
   const { product_id } = req.query;
-
-  try {
+  try {  // does this need to be handled differently?
     const results = await Promise.all([
       models.review.findAll({
         attributes: ['rating', 'recommend'],
@@ -64,22 +62,7 @@ exports.getMeta = async (req, res) => {
     let reviewsMeta = results[0];
     let characteristicsMeta = results[1];
     let { ratings, recommend } = formatRatingsRecommend(reviewsMeta);
-
-    // format the characteristicsMeta obj -- naive implementation MAKE THIS A HELPER FUNCTION
     let formattedCharacteristics = formatCharacteristics(characteristicsMeta);
-    // let formattedCharacteristics = {};
-    // characteristicsMeta.forEach((characteristic) => {
-    //   let value = 0;
-    //   characteristic.characteristic_reviews.forEach((review) => {
-    //     value += review.value;
-    //   })
-    //   value = value / characteristic.characteristic_reviews.length;
-
-    //   formattedCharacteristics[characteristic.name] = {
-    //     id: characteristic.id,
-    //     value: value
-    //   };
-    // });
 
     let response = {
       product_id: product_id,
@@ -89,6 +72,7 @@ exports.getMeta = async (req, res) => {
     };
     res.status(200).send(response);
   } catch (err) {
+    console.log(err);
     res.status(500).send(err);
   }
 };

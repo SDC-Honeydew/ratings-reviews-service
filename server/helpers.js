@@ -18,10 +18,24 @@ exports.formatCharacteristics = (characteristics) => {
     characteristic.characteristic_reviews.forEach((review) => {
       value += review.value;
     })
-    value = value / characteristic.characteristic_reviews.length; // round, zero fill, stringify
+    if (characteristic.characteristic_reviews.length) {
+      value = value / characteristic.characteristic_reviews.length;
+    }
+    // IMPROVE THIS HELPER FUNC
+    value = value.toString().split('.');
+    let integer = value[0];
+    let decimals = !value[1] ? '0000000000000000' : value[1];
+    if (decimals.length < 16) {
+      while (decimals.length < 16) {
+        decimals+='0';
+      }
+    } else {
+      decimals = decimals.slice(0, 16);
+    }
+    let formattedValue = integer + '.' + decimals;
     formattedCharacteristics[characteristic.name] = {
       id: characteristic.id,
-      value: value // add a default value here?
+      value: formattedValue === '0.0000000000000000' ? null : formattedValue
     };
   });
   return formattedCharacteristics;
