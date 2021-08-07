@@ -1,5 +1,6 @@
 const { models } = require('../sequelize');
 const { formatRatingsRecommend, formatCharacteristics } = require('./helpers');
+const oldModels = require('./models.js');
 
 exports.get = async (req, res) => {
   const { product_id } = req.query;
@@ -78,8 +79,8 @@ exports.getMeta = async (req, res) => {
 };
 
 exports.postReview = ((req, res) => {
-  // console.log('post request body: ', req.body);
-  models.postReview(req.body)
+  console.log('post request body: ', req.body);
+  oldModels.postReview(req.body)
     .then((response) => {
       res.status(201).send('CREATED');
     })
@@ -91,7 +92,7 @@ exports.postReview = ((req, res) => {
 
 exports.helpful = ((req, res) => {
   let { review_id } = req.params;
-  models.markHelpful(review_id)
+  oldModels.markHelpful(review_id)
     .then(() => {
       res.status(204).send();
     })
@@ -102,7 +103,7 @@ exports.helpful = ((req, res) => {
 
 exports.report = ((req, res) => {
   let { review_id } = req.params;
-  models.report(review_id)
+  oldModels.report(review_id)
   .then(() => {
     res.status(204).send();
   })
