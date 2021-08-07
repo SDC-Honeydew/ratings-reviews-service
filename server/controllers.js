@@ -1,4 +1,5 @@
 const { models } = require('../sequelize');
+const { formatRatingsRecommend, formatCharacteristics } = require('./helpers');
 
 exports.get = async (req, res) => {
   const { product_id } = req.query;
@@ -62,35 +63,24 @@ exports.getMeta = async (req, res) => {
 
     let reviewsMeta = results[0];
     let characteristicsMeta = results[1];
-    // format the ratings and recommended objs
-    let ratings = {};
-    let recommend = {};
-    reviewsMeta.forEach((review) => {
-      if (!ratings[review.rating]) {
-        ratings[review.rating] = 1;
-      } else {
-        ratings[review.rating]++;
-      }
-      if (!recommend[review.recommend]) {
-        recommend[review.recommend] = 1;
-      } else {
-        recommend[review.recommend]++;
-      }
-    });
-    // format the characteristicsMeta obj -- naive implementation MAKE THIS A HELPER FUNCTION
-    let formattedCharacteristics = {};
-    characteristicsMeta.forEach((characteristic) => {
-      let value = 0;
-      characteristic.characteristic_reviews.forEach((review) => {
-        value += review.value;
-      })
-      value = value / characteristic.characteristic_reviews.length;
+    let { ratings, recommend } = formatRatingsRecommend(reviewsMeta);
 
-      formattedCharacteristics[characteristic.name] = {
-        id: characteristic.id,
-        value: value
-      };
-    });
+    // format the characteristicsMeta obj -- naive implementation MAKE THIS A HELPER FUNCTION
+    let formattedCharacteristics = formatCharacteristics(characteristicsMeta);
+    // let formattedCharacteristics = {};
+    // characteristicsMeta.forEach((characteristic) => {
+    //   let value = 0;
+    //   characteristic.characteristic_reviews.forEach((review) => {
+    //     value += review.value;
+    //   })
+    //   value = value / characteristic.characteristic_reviews.length;
+
+    //   formattedCharacteristics[characteristic.name] = {
+    //     id: characteristic.id,
+    //     value: value
+    //   };
+    // });
+
     let response = {
       product_id: product_id,
       ratings: ratings,

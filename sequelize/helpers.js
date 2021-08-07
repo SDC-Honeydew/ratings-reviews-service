@@ -13,6 +13,10 @@ exports.assertDatabaseConnectionOk = async () => {
 }
 
 exports.syncDb = async () => {
-  await sequelize.sync();
-  console.log("All models were synchronized successfully.");
+  try {
+		await sequelize.sync();
+    console.log("All models were synchronized successfully.");
+	} catch (err) {
+		console.log('connection error during db sync: ', err);
+	}
 }
