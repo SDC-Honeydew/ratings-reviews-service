@@ -4,7 +4,7 @@ const { initModelRelations }  = require('./model_relations');
 // use the test db if testing...
 const uri = process.env.NODE_ENV === 'test' ? process.env.URI_TEST : process.env.URI;
 
-const sequelize = new Sequelize(uri, {logging: false});
+const sequelize = new Sequelize(uri, {logging: true});
 
 const modelDefiners = [
 	require('./models/review.model'),
