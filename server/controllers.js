@@ -1,6 +1,5 @@
 const { models } = require('../sequelize');
 const { formatRatingsRecommend, formatCharacteristics } = require('./helpers');
-// const oldModels = require('./models.js');
 
 exports.get = async (req, res) => {
   const { product_id } = req.query;
