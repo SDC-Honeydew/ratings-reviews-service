@@ -1,15 +1,17 @@
 config:
-  target: "http://52.14.78.5:8000"
+  target: "http://localhost:8000"
+  http:
+    timeout: 20
   phases:
-    - duration: 30
+    - duration: 10
       arrivalRate: 5
       name: warm up
-    - duration: 30
+    - duration: 10
       arrivalRate: 5
-      rampTo: 50
+      rampTo: 100
       name: Ramp up load
-    - duration: 30
-      arrivalRate: 100
+    - duration: 10
+      arrivalRate: 750
       name: Sustained load
   payload:
     path: "../../SDC-application-data/product.csv"
