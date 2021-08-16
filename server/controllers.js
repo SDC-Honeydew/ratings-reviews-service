@@ -1,6 +1,6 @@
 const { models } = require('../sequelize');
 const { formatRatingsRecommend, formatCharacteristics } = require('./helpers');
-const oldModels = require('./models.js');
+// const oldModels = require('./models.js');
 
 exports.get = async (req, res) => {
   const { product_id } = req.query;
@@ -79,31 +79,77 @@ exports.getMeta = async (req, res) => {
 };
 
 exports.postReview = ((req, res) => {
-  console.log('post request body: ', req.body);
-  oldModels.postReview(req.body)
-    .then((response) => {
-      res.status(201).send('CREATED');
-    })
-    .catch((err) => {
-      console.log('post request error: ', err)
-      res.status(500).send(err);
-    })
+  const review = req.body;
+  let review_id;
+
+  models.review.create({
+    product_id: review.product_id,
+    rating: review.rating,
+    date: new Date().getTime(), // REMOVE THIS LATER
+    date_time: new Date().toISOString(),
+    summary: review.summary,
+    body: review.body,
+    recommend: review.recommend,
+    reported: false,
+    reviewer_name: review.reviewer_name,
+    reviewer_email: review.reviewer_email,
+    response: null,
+    helpfulness: 0
+  })
+  .then((insertedReview) => {
+    // build the photo objects -- refactor to helper
+    review_id = insertedReview.id;
+    review.photos = review.photos.map((url) => {
+      return {
+        review_id: review_id,
+        url: url
+      }
+    });
+    // build the characteristic objects -- refactor to helper
+    let characteristicReviews = [];
+    for (let characteristic in review.characteristics) {
+      characteristicReviews.push(
+        {
+          characteristic_id: Number(characteristic),
+          review_id: review_id,
+          value: review.characteristics[characteristic]
+        }
+      );
+    }
+    return Promise.all([models.reviews_photo.bulkCreate(review.photos), models.characteristic_review.bulkCreate(characteristicReviews)]);
+  })
+  .then((response) => {
+    res.status(201).send('CREATED');
+  })
+  .catch((err) => {
+    console.log('post request error: ', err)
+    res.status(500).send(err);
+  })
+
 });
 
 exports.helpful = ((req, res) => {
-  let { review_id } = req.params;
-  oldModels.markHelpful(review_id)
-    .then(() => {
-      res.status(204).send();
-    })
-    .catch((err) => {
-      res.status(500).send();
-    })
+  const { review_id } = req.params;
+  models.review.increment('helpfulness', {
+    where: {
+      id: review_id
+    }
+  })
+  .then(() => {
+    res.status(204).send();
+  })
+  .catch((err) => {
+    res.status(500).send();
+  })
 });
 
 exports.report = ((req, res) => {
   let { review_id } = req.params;
-  oldModels.report(review_id)
+  models.review.update({reported: true}, {
+    where: {
+      id: review_id
+    }
+  })
   .then(() => {
     res.status(204).send();
   })
