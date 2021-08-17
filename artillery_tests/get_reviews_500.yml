@@ -1,5 +1,5 @@
 config:
-  target: "http://52.14.78.5:8000"
+  target: "http://localhost:1000"
   http:
     timeout: 20
   phases:
