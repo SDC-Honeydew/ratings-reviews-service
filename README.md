@@ -10,11 +10,11 @@ A Back-end service built for an existing e-commerce web app. Engineered to handl
 - Express.js
 - Sequelize
 - Redis
-- [Load Balancing](https://https://github.com/matthewwrobel/load_balancer)
+- [Load Balancer](https://https://github.com/matthewwrobel/load_balancer)
 - PostgreSQL
 - Docker
 - AWS EC2
-    ## Testing
+    ### Testing
     - Jest
     - Supertest
     - New Relic
