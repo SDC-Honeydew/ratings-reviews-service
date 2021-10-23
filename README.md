@@ -14,7 +14,7 @@ A Back-end service built for an existing e-commerce web app. Engineered to handl
 - PostgreSQL
 - Docker
 - AWS EC2
--## Testing
+- ## Testing
     - Jest
     - Supertest
     - New Relic
