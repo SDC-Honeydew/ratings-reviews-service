@@ -1,6 +1,6 @@
 # Honeydew Reviews Back-End Service
 
-A Back-end service built for an existing e-commerce web app. Engineered to handle throughput of 1000rps with average latency of less than 2000ms when deployed to AWS EC2 using t2 micro instances.
+A Back-end service built to handle customer product reviews for an existing e-commerce web app. Engineered to handle throughput of 1000rps with average latency of less than 2000ms when deployed to AWS EC2 using t2 micro instances.
 
 ---
 
