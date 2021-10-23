@@ -2,9 +2,9 @@ require('dotenv').config();
 const { Sequelize } = require('sequelize');
 const { initModelRelations }  = require('./model_relations');
 // use the test db if testing...
-const uri = process.env.NODE_ENV === 'test' ? process.env.URI_TEST : process.env.URI;
+const uri = process.env.NODE_ENV === 'test' ? process.env.URI_TEST : process.env.LOCAL_URI;
 
-const sequelize = new Sequelize(uri, {logging: true});
+const sequelize = new Sequelize(uri, {logging: false});
 
 const modelDefiners = [
 	require('./models/review.model'),

@@ -7,7 +7,7 @@ exports.get = async (req, res) => {
   const count = req.query.count || 5;
   const sort = req.query.sort || 'newest'; // refactor this
   const sortOrder = sort === 'newest' ? 'date' : 'helpfulness'; // ...and this
-
+  console.log('product_id:', product_id);
   try {
     const reviews = await models.review.findAll({
       attributes: [['id', 'review_id'], 'rating', 'summary', 'recommend', 'response', 'body', ['date_time', 'date'], 'reviewer_name', 'helpfulness'],
@@ -24,6 +24,7 @@ exports.get = async (req, res) => {
       },
       order: [[sortOrder, 'DESC']]
     })
+    console.log(reviews);
     const response = {
       product: product_id.toString(),
       page: Number(page),

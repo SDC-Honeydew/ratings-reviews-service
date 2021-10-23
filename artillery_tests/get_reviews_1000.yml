@@ -10,7 +10,7 @@ config:
       arrivalRate: 5
       rampTo: 100
       name: Ramp up load
-    - duration: 10
+    - duration: 20
       arrivalRate: 1000
       name: Sustained load
   payload:
@@ -22,4 +22,4 @@ scenarios:
   - name: "search"
     flow:
       - get:
-          url: "/reviews?product_id={{id}}"
+          url: "/reviews?product_id={{$randomNumber(900000, 1000000}}"
